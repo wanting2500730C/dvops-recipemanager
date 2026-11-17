@@ -1,0 +1,8 @@
+[
+  {
+    "id": 1,
+    "name": "Sample Recipe",
+    "ingredients": "Ingredient 1, Ingredient 2",
+    "instructions": "Step 1, Step 2"
+  }
+]

@@ -1,22 +1,14 @@
-var express = require('express');
-var bodyParser = require("body-parser");
-var app = express();
+const express = require('express');
+const app = express();
 
-const PORT = process.env.PORT || 5050
-var startPage = "index.html";
+const { updateRecipe } = require('./utils/Jansen-Utils.js');
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static("./public"));
+app.use(express.json());
+app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/" + startPage);
-})
+app.put('/update-recipe/:id', updateRecipe);
 
-server = app.listen(PORT, function () {
-    const address = server.address();
-    const baseUrl = `http://${address.address == "::" ? 'localhost' : address.address}:${address.port}`;
-    console.log(`Demo project at: ${baseUrl}`);
+const PORT = 5000;
+app.listen(PORT, function () {
+  console.log('Server running at http://localhost:' + PORT);
 });
-
-module.exports = {app, server}

@@ -1,8 +1,24 @@
-<html>
-    <head>
-        <title>DVOPS - Resource Management Web App</title>
-    </head>
-    <body>
-        Welcome to my Resource Management Web Application. In this application, users will get to manage resources.
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipe Manager</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <h1>Recipe Manager</h1>
+
+  <div class="card">
+    <h2>Update a Recipe</h2>
+    <input type="number" id="updateId" placeholder="ID of the recipe to update">
+    <input type="text" id="updateName" placeholder="New recipe name">
+    <textarea id="updateIngredients" placeholder="New ingredients"></textarea>
+    <textarea id="updateInstructions" placeholder="New instructions"></textarea>
+    <button id="updateButton">Update Recipe</button>
+    <p id="updateMessage"></p>
+  </div>
+
+  <script src="js/jansen.js"></script>
+</body>
 </html>
