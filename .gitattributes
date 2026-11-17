@@ -1,0 +1,10 @@
+# Automatically detect text files
+* text=auto
+
+# Standardise line endings to LF
+*.js text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+
