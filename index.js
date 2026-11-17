@@ -1,22 +1,17 @@
-var express = require('express');
-var bodyParser = require("body-parser");
-var app = express();
+const express = require('express');
+const path = require('node:path');
+const { createRecipe } = require('./utils/XIAOTONG');
 
-const PORT = process.env.PORT || 5050
-var startPage = "index.html";
+const app = express();
+const PORT = process.env.PORT || 5050;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.static("./public"));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/public/" + startPage);
-})
+app.post('/add-recipe', createRecipe);
 
-server = app.listen(PORT, function () {
-    const address = server.address();
-    const baseUrl = `http://${address.address == "::" ? 'localhost' : address.address}:${address.port}`;
-    console.log(`Demo project at: ${baseUrl}`);
+const server = app.listen(PORT, function () {
+    console.log(`Recipe Manager running at http://localhost:${PORT}`);
 });
 
-module.exports = {app, server}
+module.exports = { app, server };

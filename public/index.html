@@ -1,8 +1,76 @@
-<html>
-    <head>
-        <title>DVOPS - Resource Management Web App</title>
-    </head>
-    <body>
-        Welcome to my Resource Management Web Application. In this application, users will get to manage resources.
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Manager</title>
+    <script src="/js/xiaotong.js" defer></script>
+</head>
+<body>
+    <main>
+        <h1>Recipe Manager</h1>
+
+        <section aria-labelledby="addRecipeHeading">
+            <h2 id="addRecipeHeading">Add Recipe</h2>
+
+            <form id="addRecipeForm">
+                <p>
+                    <label for="recipeName">Recipe Name</label>
+                    <input type="text" id="recipeName" required>
+                </p>
+
+                <p>
+                    <label for="recipeCategory">Cuisine</label>
+                    <select id="recipeCategory" required>
+                        <option value="">Select a cuisine</option>
+                        <option value="Indian">Indian</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Korean">Korean</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </p>
+
+                <fieldset>
+                    <legend>Ingredients</legend>
+                    <div id="recipeIngredients"></div>
+                    <button type="button" id="addIngredientButton">+ Add Ingredient</button>
+                </fieldset>
+
+                <p>
+                    <label for="recipeInstructions">
+                        Cooking Instructions (one step per line)
+                    </label>
+                    <textarea id="recipeInstructions" rows="5" required></textarea>
+                </p>
+
+                <button type="submit" id="saveRecipeButton">Save Recipe</button>
+                <p id="addRecipeMessage" role="status"></p>
+            </form>
+        </section>
+    </main>
+
+    <template id="ingredientRowTemplate">
+        <p class="recipe-ingredient">
+            <label>
+                Ingredient Name
+                <input type="text" class="ingredient-name" required>
+            </label>
+
+            <label>
+                Quantity
+                <input type="number" class="ingredient-quantity" min="0" step="any" required>
+            </label>
+
+            <label>
+                Unit
+                <input type="text" class="ingredient-unit" placeholder="e.g. g or cups" required>
+            </label>
+
+            <button type="button" class="remove-ingredient">Remove</button>
+        </p>
+    </template>
+</body>
 </html>
