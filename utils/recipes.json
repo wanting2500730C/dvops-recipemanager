@@ -1,8 +1,32 @@
 [
   {
-    "id": 1,
-    "name": "Sample Recipe",
-    "ingredients": "Ingredient 1, Ingredient 2",
-    "instructions": "Step 1, Step 2"
+    "id": "9c49edfa-7419-464b-8983-c571fe038d6a",
+    "name": "test1",
+    "category": "Indian",
+    "ingredients": [
+      {
+        "name": "asd",
+        "quantity": 12,
+        "unit": "2 cups"
+      }
+    ],
+    "instructions": [
+      "asdasdas"
+    ]
+  },
+  {
+    "id": "930e82e2-7dd5-4926-b915-d03985636b49",
+    "name": "asdsa",
+    "category": "Indian",
+    "ingredients": [
+      {
+        "name": "test2",
+        "quantity": 2,
+        "unit": "cups"
+      }
+    ],
+    "instructions": [
+      "cook"
+    ]
   }
 ]

@@ -1,31 +1,40 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const filePath = path.join(__dirname, 'recipes.json');
 
 // PUT /update-recipe/:id
 function updateRecipe(req, res) {
-  const text = fs.readFileSync(filePath, 'utf8');
-  const recipes = JSON.parse(text);
-  const idToUpdate = Number(req.params.id);
+    try {
+        const text = fs.readFileSync(filePath, 'utf8');
+        const recipes = JSON.parse(text);
 
-  let found = false;
-  for (let i = 0; i < recipes.length; i++) {
-    if (recipes[i].id === idToUpdate) {
-      recipes[i].name = req.body.name;
-      recipes[i].ingredients = req.body.ingredients;
-      recipes[i].instructions = req.body.instructions;
-      found = true;
+        const idToUpdate = req.params.id;
+        const recipe = recipes.find((item) => String(item.id) === idToUpdate);
+
+        if (!recipe) {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+
+        const {
+            name,
+            category = recipe.category,
+            ingredients,
+            instructions
+        } = req.body;
+
+        recipe.name = name;
+        recipe.category = category;
+        recipe.ingredients = ingredients;
+        recipe.instructions = instructions;
+
+        fs.writeFileSync(filePath, JSON.stringify(recipes, null, 2) + '\n', 'utf8');
+
+        return res.json({ message: 'Recipe updated', recipe });
+    } catch (error) {
+        console.error('Could not update recipe:', error);
+        return res.status(500).json({ message: 'Could not update the recipe' });
     }
-  }
-
-  if (found === false) {
-    res.status(404).json({ message: 'Recipe not found' });
-    return;
-  }
-
-  fs.writeFileSync(filePath, JSON.stringify(recipes, null, 2));
-  res.json({ message: 'Recipe updated' });
 }
 
 module.exports = { updateRecipe };
