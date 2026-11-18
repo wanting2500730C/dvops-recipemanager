@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="/css/styles.css">
     <meta charset="UTF-8">
@@ -7,10 +8,53 @@
     <title>Recipe Manager</title>
     <script src="/js/xiaotong.js" defer></script>
     <script src="/js/jansen.js" defer></script>
+    <script src="/js/wanting.js" defer></script>
 </head>
+
 <body>
+
     <main>
-        <h1>Recipe Manager</h1>
+        <!-- Homepage Header -->
+        <header class="homepage-header">
+            <div>
+                <h1>Recipe Manager</h1>
+                <p>Your personal recipe collection</p>
+            </div>
+
+            <button type="button" id="createRecipeButton">
+                + Create Recipe
+            </button>
+        </header>
+
+        <!-- READ - Wan Ting -->
+        <section id="recipeHomepage" aria-labelledby="viewRecipeHeading">
+            <h2 id="viewRecipeHeading">All Recipes</h2>
+
+
+            <!-- SEARCH AND FILTER - WAN TING -->
+            <div class="recipe-controls">
+
+                <input type="search" id="searchRecipe" placeholder="Search recipes by name..."
+                    aria-label="Search recipes by name">
+
+                <select id="filterCuisine" aria-label="Filter recipes by cuisine">
+                    <option value="All">All Cuisines</option>
+                    <option value="Indian">Indian</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Other">Other</option>
+                </select>
+
+            </div>
+
+
+            <p id="readRecipeMessage" role="status"></p>
+
+            <div id="recipeList"></div>
+        </section>
+
 
         <section aria-labelledby="addRecipeHeading">
             <h2 id="addRecipeHeading">Add Recipe</h2>
@@ -140,4 +184,5 @@
         </p>
     </template>
 </body>
+
 </html>
