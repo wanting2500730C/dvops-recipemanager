@@ -4,6 +4,32 @@ const ingredientTemplate = document.getElementById('ingredientRowTemplate');
 const addIngredientButton = document.getElementById('addIngredientButton');
 const saveRecipeButton = document.getElementById('saveRecipeButton');
 const recipeMessage = document.getElementById('addRecipeMessage');
+const recipePhotoInput = document.getElementById('recipePhoto');
+const recipePhotoPreview = document.getElementById('recipePhotoPreview');
+
+let photoPreviewUrl;
+
+function clearPhotoPreview() {
+    if (photoPreviewUrl) {
+        URL.revokeObjectURL(photoPreviewUrl);
+        photoPreviewUrl = undefined;
+    }
+
+    recipePhotoPreview.removeAttribute('src');
+    recipePhotoPreview.hidden = true;
+}
+
+recipePhotoInput.addEventListener('change', function () {
+    clearPhotoPreview();
+
+    const photo = recipePhotoInput.files[0];
+
+    if (photo) {
+        photoPreviewUrl = URL.createObjectURL(photo);
+        recipePhotoPreview.src = photoPreviewUrl;
+        recipePhotoPreview.hidden = false;
+    }
+});
 
 function addIngredientRow() {
     const row = ingredientTemplate.content.firstElementChild.cloneNode(true);
@@ -53,12 +79,20 @@ function addRecipe(event) {
         return;
     }
 
+    const formData = new FormData();
+    formData.append('recipe', JSON.stringify(jsonData));
+
+    const photo = recipePhotoInput.files[0];
+
+    if (photo) {
+        formData.append('photo', photo);
+    }
+
     saveRecipeButton.disabled = true;
     recipeMessage.textContent = 'Saving recipe…';
 
     const request = new XMLHttpRequest();
     request.open('POST', '/add-recipe', true);
-    request.setRequestHeader('Content-Type', 'application/json');
     request.responseType = 'json';
 
     request.onload = function () {
@@ -66,6 +100,7 @@ function addRecipe(event) {
 
         if (request.status === 201) {
             addRecipeForm.reset();
+            clearPhotoPreview();
             ingredientRows.replaceChildren();
             addIngredientRow();
         }
@@ -79,7 +114,8 @@ function addRecipe(event) {
         saveRecipeButton.disabled = false;
     };
 
-    request.send(JSON.stringify(jsonData));
+    // The browser sets the multipart Content-Type when sending FormData.
+    request.send(formData);
 }
 
 addIngredientButton.addEventListener('click', addIngredientRow);

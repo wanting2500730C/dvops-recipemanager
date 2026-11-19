@@ -49,6 +49,13 @@
                     <textarea id="recipeInstructions" rows="5" required></textarea>
                 </p>
 
+                <p>
+                    <label for="recipePhoto">Recipe Photo (optional)</label>
+                    <input type="file" id="recipePhoto" accept="image/jpeg,image/png">
+                </p>
+
+                <img id="recipePhotoPreview" alt="Preview of the selected photo" width="240" hidden>
+
                 <button type="submit" id="saveRecipeButton">Save Recipe</button>
                 <p id="addRecipeMessage" role="status"></p>
             </form>

@@ -1,15 +1,69 @@
 const fs = require('node:fs').promises;
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
+const multer = require('multer');
 
 const recipesFile = path.join(__dirname, 'recipes.json');
 const templateFile = path.join(__dirname, 'recipes.template.json');
+const uploadFolder = path.join(__dirname, '..', 'public', 'uploads');
 
 const cuisines = new Set([
     'Indian', 'Chinese', 'Japanese', 'Korean', 'Italian', 'Other'
 ]);
 
+const receivePhoto = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: 2 * 1024 * 1024,
+        files: 1,
+        fields: 1
+    }
+}).single('photo');
+
 let pendingSave = Promise.resolve();
+
+function uploadRecipePhoto(req, res, next) {
+    // Existing callers can still send a recipe as JSON.
+    if (!req.is('multipart/form-data')) {
+        return next();
+    }
+
+    receivePhoto(req, res, function (error) {
+        if (error?.code === 'LIMIT_FILE_SIZE') {
+            return res.status(413).json({
+                message: 'Photo must be 2 MB or smaller.'
+            });
+        }
+
+        if (error) {
+            return res.status(400).json({
+                message: 'Could not read the photo upload.'
+            });
+        }
+
+        try {
+            req.body = JSON.parse(req.body.recipe);
+        } catch {
+            return res.status(400).json({ message: 'Invalid recipe data.' });
+        }
+
+        next();
+    });
+}
+
+function getPhotoExtension(buffer) {
+    const pngSignature = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+
+    if (pngSignature.every((byte, index) => buffer[index] === byte)) {
+        return 'png';
+    }
+
+    if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+        return 'jpg';
+    }
+
+    return null;
+}
 
 function hasText(value) {
     return typeof value === 'string' && value.trim().length > 0;
@@ -38,7 +92,7 @@ async function saveRecipe(recipe) {
         await fs.writeFile(temporaryFile, JSON.stringify(recipes, null, 2) + '\n', 'utf8');
         await fs.rename(temporaryFile, recipesFile);
     } catch (error) {
-        await fs.rm(temporaryFile, { force: true });
+        await fs.rm(temporaryFile, { force: true }).catch(console.error);
         throw error;
     }
 }
@@ -77,6 +131,13 @@ async function createRecipe(req, res) {
         return res.status(400).json({ message: 'Enter at least one cooking step.' });
     }
 
+    const photo = req.file;
+    const extension = photo ? getPhotoExtension(photo.buffer) : null;
+
+    if (photo && !extension) {
+        return res.status(400).json({ message: 'Choose a JPG or PNG photo.' });
+    }
+
     const recipe = {
         id: randomUUID(),
         name: name.trim(),
@@ -89,20 +150,37 @@ async function createRecipe(req, res) {
         instructions: instructions.map((step) => step.trim())
     };
 
-    // Process Create Recipe saves in order to avoid overwriting another new recipe.
-    const save = pendingSave.then(() => saveRecipe(recipe));
-    pendingSave = save.catch(() => {});
+    let photoPath;
 
     try {
+        if (photo) {
+            const fileName = `${recipe.id}.${extension}`;
+
+            await fs.mkdir(uploadFolder, { recursive: true });
+            photoPath = path.join(uploadFolder, fileName);
+            await fs.writeFile(photoPath, photo.buffer);
+
+            recipe.image = `/uploads/${fileName}`;
+        }
+
+        // Process Create Recipe saves in order.
+        const save = pendingSave.then(() => saveRecipe(recipe));
+        pendingSave = save.catch(() => {});
         await save;
-        return res.status(201).json({
-            message: 'Recipe saved successfully.',
-            recipe
-        });
     } catch (error) {
+        // Clean up the photo if the recipe could not be saved.
+        if (photoPath) {
+            await fs.rm(photoPath, { force: true }).catch(console.error);
+        }
+
         console.error('Could not save recipe:', error);
         return res.status(500).json({ message: 'The server could not save the recipe.' });
     }
+
+    return res.status(201).json({
+        message: 'Recipe saved successfully.',
+        recipe
+    });
 }
 
-module.exports = { createRecipe };
+module.exports = { createRecipe, uploadRecipePhoto };

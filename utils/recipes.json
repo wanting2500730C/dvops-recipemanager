@@ -43,5 +43,36 @@
     "instructions": [
       "test"
     ]
+  },
+  {
+    "id": "fb824971-d4bd-45bc-ab0c-5daf483d7811",
+    "name": "test 2",
+    "category": "Korean",
+    "ingredients": [
+      {
+        "name": "test 2",
+        "quantity": 1,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      "test2"
+    ]
+  },
+  {
+    "id": "6e5a0d13-5283-4836-843a-c9141f18a6c9",
+    "name": "test 3 with image",
+    "category": "Chinese",
+    "ingredients": [
+      {
+        "name": "test 3",
+        "quantity": 3,
+        "unit": "g"
+      }
+    ],
+    "instructions": [
+      "test for image"
+    ],
+    "image": "/uploads/6e5a0d13-5283-4836-843a-c9141f18a6c9.jpg"
   }
 ]
