@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+    <script src="/js/jansen.js" defer></script>
+</head>
+<body>
+    <main>
+        <h1>Edit Recipe</h1>
+        <p><a href="/">Back to recipes</a></p>
+
+        <form id="editRecipeForm">
+            <p>
+                <label for="editName">Recipe Name</label>
+                <input type="text" id="editName">
+            </p>
+
+            <p>
+                <label for="editCategory">Cuisine</label>
+                <select id="editCategory">
+                    <option value="">Select a cuisine</option>
+                    <option value="Indian">Indian</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Other">Other</option>
+                </select>
+            </p>
+
+            <fieldset>
+                <legend>Ingredients</legend>
+                <div id="editIngredients"></div>
+                <button type="button" id="editAddIngredientButton">+ Add Ingredient</button>
+            </fieldset>
+
+            <p>
+                <label for="editInstructions">Cooking Instructions (one step per line)</label>
+                <textarea id="editInstructions" rows="5"></textarea>
+            </p>
+
+            <fieldset>
+                <legend>Photo</legend>
+                <p>Current photo:</p>
+                <img id="editCurrentPhoto" alt="Current recipe photo" width="200" hidden>
+                <p id="editNoPhoto" hidden>No photo yet.</p>
+
+                <p>
+                    <label for="editPhoto">Choose a new photo (JPG or PNG, max 2 MB)</label>
+                    <input type="file" id="editPhoto" accept="image/png, image/jpeg">
+                </p>
+                <p>New photo preview:</p>
+                <img id="editPhotoPreview" alt="New photo preview" width="200" hidden>
+            </fieldset>
+
+            <button type="submit" id="editSaveButton">Save Changes</button>
+            <p id="editMessage" role="status"></p>
+        </form>
+    </main>
+
+    <template id="editIngredientTemplate">
+        <p class="recipe-ingredient">
+            <label>
+                Ingredient Name
+                <input type="text" class="ingredient-name">
+            </label>
+
+            <label>
+                Quantity
+                <input type="number" class="ingredient-quantity" min="0" step="any">
+            </label>
+
+            <label>
+                Unit
+                <input type="text" class="ingredient-unit" placeholder="e.g. g or cups">
+            </label>
+
+            <button type="button" class="remove-ingredient">Remove</button>
+        </p>
+    </template>
+</body>
+</html>

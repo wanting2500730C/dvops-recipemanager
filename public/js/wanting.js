@@ -84,11 +84,22 @@ async function displayRecipes() {
                 displayRecipeDetails(recipe);
             });
 
+            // UPDATE - Edit button (opens edit.html for this recipe) - JANSEN
+            const editButton = document.createElement('button');
+            editButton.type = 'button';
+            editButton.className = 'view-details-button';
+            editButton.textContent = 'Edit';
+
+            editButton.addEventListener('click', () => {
+                window.location.href = '/edit.html?id=' + recipe.id;
+            });
+
             recipeCard.appendChild(recipeImage);
             recipeCard.appendChild(recipeCategory);
             recipeCard.appendChild(recipeName);
             recipeCard.appendChild(ingredientCount);
             recipeCard.appendChild(viewButton);
+            recipeCard.appendChild(editButton);
 
             recipeList.appendChild(recipeCard);
         });
@@ -169,4 +180,11 @@ searchRecipe.addEventListener('input', () => {
 // FILTER - Filter recipes by cuisine
 filterCuisine.addEventListener('change', () => {
     displayRecipes();
+});
+
+// CREATE - Open the add recipe page
+const createRecipeButton = document.getElementById('createRecipeButton');
+
+createRecipeButton.addEventListener('click', () => {
+    window.location.href = '/index.html';
 });

@@ -412,3 +412,178 @@ section[aria-labelledby="addRecipeHeading"] {
     margin: 15px 0;
     background: #e8f2eb;
 }
+
+
+/* =====================================
+   JANSEN - EDIT RECIPE PAGE
+===================================== */
+
+/* Back link */
+main > p > a {
+    color: #286044;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+main > p > a:hover {
+    text-decoration: underline;
+}
+
+/* The form is the card */
+#editRecipeForm {
+    display: grid;
+    gap: 20px;
+    padding: clamp(18px, 4vw, 32px);
+    border: 1px solid #dde4dc;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(36, 51, 42, 0.06);
+}
+
+#editRecipeForm p {
+    margin: 0;
+}
+
+#editRecipeForm label,
+#editRecipeForm legend {
+    font-weight: 600;
+}
+
+/* Fields */
+#editRecipeForm input,
+#editRecipeForm select,
+#editRecipeForm textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px 12px;
+    border: 1px solid #aebcaf;
+    border-radius: 8px;
+    background: #fff;
+    color: inherit;
+    font: inherit;
+}
+
+#editRecipeForm :is(input, select, textarea, button):focus-visible {
+    outline: 2px solid #2b6c4c;
+    outline-offset: 2px;
+}
+
+/* Ingredients and Photo boxes */
+#editRecipeForm fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid #dde4dc;
+    border-radius: 10px;
+    background: #f7f9f6;
+}
+
+#editRecipeForm legend {
+    padding: 0 6px;
+}
+
+#editRecipeForm fieldset p {
+    margin-bottom: 10px;
+}
+
+/* Ingredient rows */
+#editIngredients {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+#editRecipeForm .recipe-ingredient {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 10px;
+    margin: 0;
+}
+
+/* Instructions */
+#editInstructions {
+    min-height: 220px;
+    line-height: 1.5;
+    resize: vertical;
+}
+
+/* Photos */
+#editCurrentPhoto,
+#editPhotoPreview {
+    width: 100%;
+    max-width: 260px;
+    height: 180px;
+    margin-bottom: 14px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #e8f2eb;
+}
+
+/* Buttons */
+#editRecipeForm button {
+    width: fit-content;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#editAddIngredientButton {
+    border-color: #b6cbbd;
+    background: #e8f2eb;
+    color: #204e35;
+}
+
+#editAddIngredientButton:hover {
+    background: #dbece0;
+}
+
+#editRecipeForm .remove-ingredient {
+    border-color: #e2c0bc;
+    background: #fff;
+    color: #923b32;
+}
+
+#editRecipeForm .remove-ingredient:hover {
+    background: #fdf1ef;
+}
+
+#editSaveButton {
+    background: #286044;
+    color: #fff;
+}
+
+#editSaveButton:hover:not(:disabled) {
+    background: #204e37;
+}
+
+#editSaveButton:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+/* Status message */
+#editMessage {
+    font-weight: 600;
+}
+
+#editMessage:empty {
+    display: none;
+}
+
+/* Phone layout */
+@media (max-width: 600px) {
+    #editRecipeForm .recipe-ingredient {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #editRecipeForm .recipe-ingredient + .recipe-ingredient {
+        padding-top: 12px;
+        border-top: 1px solid #dde4dc;
+    }
+}

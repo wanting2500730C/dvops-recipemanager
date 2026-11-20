@@ -74,5 +74,21 @@
       "test for image"
     ],
     "image": "/uploads/6e5a0d13-5283-4836-843a-c9141f18a6c9.jpg"
+  },
+  {
+    "id": "b07ca4da-9201-4de5-958c-5603c9fa5843",
+    "name": "test 4 - update",
+    "category": "Korean",
+    "ingredients": [
+      {
+        "name": "Chicken",
+        "quantity": 12,
+        "unit": "cup"
+      }
+    ],
+    "instructions": [
+      "cook it faster!"
+    ],
+    "image": "/uploads/b07ca4da-9201-4de5-958c-5603c9fa5843-1795156234436.png"
   }
 ]
