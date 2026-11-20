@@ -3,6 +3,7 @@ const path = require('node:path');
 const { createRecipe, uploadRecipePhoto } = require('./utils/XIAOTONG');
 const { updateRecipe } = require('./utils/Jansen-Utils.js');
 const { readRecipes, readRecipeById } = require('./utils/WantingUtil.js');
+const { deleteRecipe } = require('./utils/vasu-utils.js');
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/add-recipe', uploadRecipePhoto, createRecipe);
 app.put('/update-recipe/:id', uploadRecipePhoto, updateRecipe);
+app.delete('/delete-recipe/:id', deleteRecipe); 
 
 app.get('/recipes', readRecipes);
 app.get('/recipes/:id', readRecipeById);
