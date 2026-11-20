@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Manager</title>
     <script src="/js/xiaotong.js" defer></script>
-    <script src="/js/jansen.js" defer></script>
 </head>
 
 <body>
 
     <main>
+
+        <p><a href="/">&larr; Back to recipes</a></p>
 
         <section aria-labelledby="addRecipeHeading">
             <h2 id="addRecipeHeading">Add Recipe</h2>
@@ -60,51 +61,6 @@
                 <p id="addRecipeMessage" role="status"></p>
             </form>
         </section>
-
-        <section aria-labelledby="updateRecipeHeading">
-            <h2 id="updateRecipeHeading">Update Recipe</h2>
-
-            <form id="updateRecipeForm">
-                <p>
-                    <label for="updateId">Recipe ID</label>
-                    <input type="text" id="updateId">
-                </p>
-
-                <p>
-                    <label for="updateName">New Recipe Name</label>
-                    <input type="text" id="updateName">
-                </p>
-
-                <p>
-                    <label for="updateCategory">Cuisine</label>
-                    <select id="updateCategory">
-                        <option value="">Select a cuisine</option>
-                        <option value="Indian">Indian</option>
-                        <option value="Chinese">Chinese</option>
-                        <option value="Japanese">Japanese</option>
-                        <option value="Korean">Korean</option>
-                        <option value="Italian">Italian</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </p>
-
-                <fieldset>
-                    <legend>Ingredients</legend>
-                    <div id="updateIngredients"></div>
-                    <button type="button" id="updateAddIngredientButton">+ Add Ingredient</button>
-                </fieldset>
-
-                <p>
-                    <label for="updateInstructions">
-                        Cooking Instructions (one step per line)
-                    </label>
-                    <textarea id="updateInstructions" rows="5"></textarea>
-                </p>
-
-                <button type="submit" id="updateButton">Update Recipe</button>
-                <p id="updateMessage" role="status"></p>
-            </form>
-        </section>
     </main>
 
     <template id="ingredientRowTemplate">
@@ -122,27 +78,6 @@
             <label>
                 Unit
                 <input type="text" class="ingredient-unit" placeholder="e.g. g or cups" required>
-            </label>
-
-            <button type="button" class="remove-ingredient">Remove</button>
-        </p>
-    </template>
-
-    <template id="updateIngredientTemplate">
-        <p class="recipe-ingredient">
-            <label>
-                Ingredient Name
-                <input type="text" class="ingredient-name">
-            </label>
-
-            <label>
-                Quantity
-                <input type="number" class="ingredient-quantity" min="0" step="any">
-            </label>
-
-            <label>
-                Unit
-                <input type="text" class="ingredient-unit" placeholder="e.g. g or cups">
             </label>
 
             <button type="button" class="remove-ingredient">Remove</button>

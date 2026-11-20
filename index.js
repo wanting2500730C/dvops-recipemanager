@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/add-recipe', uploadRecipePhoto, createRecipe);
-app.put('/update-recipe/:id', updateRecipe);
+app.put('/update-recipe/:id', uploadRecipePhoto, updateRecipe);
 
 app.get('/recipes', readRecipes);
 app.get('/recipes/:id', readRecipeById);
