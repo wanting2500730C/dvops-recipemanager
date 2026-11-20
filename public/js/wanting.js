@@ -51,6 +51,8 @@ async function displayRecipes() {
             // Create recipe card
             const recipeCard = document.createElement('div');
             recipeCard.className = 'recipe-card';
+            // DELETE - data-id lets the Delete feature know which recipe each card is (added by vasu)
+            recipeCard.dataset.id = recipe.id;
 
             // READ - Display recipe image
             const recipeImage = document.createElement('img');

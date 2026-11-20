@@ -587,3 +587,56 @@ main > p > a:hover {
         border-top: 1px solid #dde4dc;
     }
 }
+
+/* =====================================
+        VASU - DELETE RECIPE
+===================================== */
+
+/* Delete Recipe button - below Create Recipe */
+.header-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#deleteRecipeButton {
+    padding: 12px 20px;
+    background: #b23a3a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+#deleteRecipeButton:hover {
+    background: #8f2e2e;
+}
+
+/* Grey "Cancel" look when nothing is selected */
+#deleteRecipeButton.cancel-mode {
+    background: #6b7a70;
+}
+
+#deleteRecipeButton.cancel-mode:hover {
+    background: #566259;
+}
+
+/* Delete mode - cards become selectable */
+#recipeList.delete-mode .recipe-card {
+    cursor: pointer;
+}
+
+/* clicks on a card's own buttons fall through to the card */
+#recipeList.delete-mode .recipe-card button {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+#recipeList.delete-mode .recipe-card.selected {
+    background: #fdeeee;
+    border-color: #b23a3a;
+    box-shadow: 0 0 0 2px #b23a3a;
+}

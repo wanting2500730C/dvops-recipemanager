@@ -8,6 +8,7 @@
     <title>View Recipes</title>
 
     <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/vasu.js" defer></script>
     <script src="/js/wanting.js" defer></script>
 </head>
 
@@ -19,10 +20,16 @@
                 <h1>Recipe Manager</h1>
                 <p>Your personal recipe collection</p>
             </div>
+        <!-- Modified this to add the delete button -->
+            <div class="header-actions">
+                <button type="button" id="createRecipeButton">
+                    + Create Recipe
+                </button>
 
-            <button type="button" id="createRecipeButton">
-                + Create Recipe
-            </button>
+                <button type="button" id="deleteRecipeButton">
+                    🗑 Delete Recipe
+                </button>
+            </div>
         </header>
 
         <!-- READ - WAN TING -->
