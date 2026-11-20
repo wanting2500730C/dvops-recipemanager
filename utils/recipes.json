@@ -12,7 +12,8 @@
     ],
     "instructions": [
       "asdasdas"
-    ]
+    ],
+    "image": "/uploads/9c49edfa-7419-464b-8983-c571fe038d6a-1795165981930.jpg"
   },
   {
     "id": "930e82e2-7dd5-4926-b915-d03985636b49",
@@ -27,21 +28,6 @@
     ],
     "instructions": [
       "cook"
-    ]
-  },
-  {
-    "id": "a6ad4fb1-4ba8-4985-8198-b9c19284aec1",
-    "name": "test",
-    "category": "Chinese",
-    "ingredients": [
-      {
-        "name": "test",
-        "quantity": 1,
-        "unit": "300g"
-      }
-    ],
-    "instructions": [
-      "test"
     ]
   },
   {
