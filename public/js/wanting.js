@@ -5,8 +5,22 @@ const filterCuisine = document.getElementById('filterCuisine');
 
 let allRecipes = [];
 
-// READ - Retrieve and display all recipes
-async function displayRecipes() {
+// SEARCH & FILTER - Filter recipes by name and cuisine
+function filterRecipes() {
+    const searchText = searchRecipe.value.toLowerCase().trim();
+    const selectedCuisine = filterCuisine.value;
+
+    return allRecipes.filter(recipe => {
+        const matchesName = recipe.name.toLowerCase().includes(searchText);
+        const matchesCuisine =
+            selectedCuisine === 'All' || recipe.category === selectedCuisine;
+
+        return matchesName && matchesCuisine;
+    });
+}
+
+// READ - Retrieve recipes from the JSON backend
+async function loadRecipes() {
     try {
         const response = await fetch('/recipes');
 
@@ -16,104 +30,148 @@ async function displayRecipes() {
 
         const recipes = await response.json();
 
+        // Validate returned data
+        if (!Array.isArray(recipes)) {
+            throw new Error('Invalid recipe data');
+        }
+
         allRecipes = recipes;
-
-        recipeList.innerHTML = '';
-
-        if (recipes.length === 0) {
-            readRecipeMessage.textContent = 'No recipes found.';
-            return;
-        }
-
-        readRecipeMessage.textContent = '';
-
-        const filteredRecipes = allRecipes.filter(recipe => {
-            const searchText = searchRecipe.value.toLowerCase().trim();
-            const selectedCuisine = filterCuisine.value;
-
-            const matchesName = recipe.name.toLowerCase().includes(searchText);
-            const matchesCuisine =
-                selectedCuisine === 'All' || recipe.category === selectedCuisine;
-
-            return matchesName && matchesCuisine;
-        });
-
-        // Display message when no recipes match
-        if (filteredRecipes.length === 0) {
-            readRecipeMessage.textContent =
-                'No recipes found. Try another search or cuisine.';
-            return;
-        }
-
-        readRecipeMessage.textContent = '';
-
-        filteredRecipes.forEach(recipe => {
-            // Create recipe card
-            const recipeCard = document.createElement('div');
-            recipeCard.className = 'recipe-card';
-            // DELETE - data-id lets the Delete feature know which recipe each card is (added by vasu)
-            recipeCard.dataset.id = recipe.id;
-
-            // READ - Display recipe image
-            const recipeImage = document.createElement('img');
-            recipeImage.className = 'recipe-image';
-            recipeImage.src = recipe.image || '/images/placeholder.jpg';
-            recipeImage.alt = recipe.name;
-            recipeImage.loading = 'lazy';
-
-            // Cuisine badge
-            const recipeCategory = document.createElement('span');
-            recipeCategory.className = 'recipe-category';
-            recipeCategory.textContent = recipe.category;
-
-            // Recipe name
-            const recipeName = document.createElement('h3');
-            recipeName.textContent = recipe.name;
-
-            // Ingredient count
-            const ingredientCount = document.createElement('p');
-            ingredientCount.className = 'recipe-info';
-            ingredientCount.textContent =
-                `${recipe.ingredients.length} ingredient(s)`;
-
-            // View Details button
-            const viewButton = document.createElement('button');
-            viewButton.type = 'button';
-            viewButton.className = 'view-details-button';
-            viewButton.textContent = 'View Details';
-
-            viewButton.addEventListener('click', () => {
-                displayRecipeDetails(recipe);
-            });
-
-            // UPDATE - Edit button (opens edit.html for this recipe) - JANSEN
-            const editButton = document.createElement('button');
-            editButton.type = 'button';
-            editButton.className = 'view-details-button';
-            editButton.textContent = 'Edit';
-
-            editButton.addEventListener('click', () => {
-                window.location.href = '/edit.html?id=' + recipe.id;
-            });
-
-            recipeCard.appendChild(recipeImage);
-            recipeCard.appendChild(recipeCategory);
-            recipeCard.appendChild(recipeName);
-            recipeCard.appendChild(ingredientCount);
-            recipeCard.appendChild(viewButton);
-            recipeCard.appendChild(editButton);
-
-            recipeList.appendChild(recipeCard);
-        });
+        displayRecipes();
 
     } catch (error) {
+        allRecipes = [];
+        recipeList.innerHTML = '';
         readRecipeMessage.textContent = 'Error loading recipes.';
+    }
+}
+
+// READ - Display and filter recipe cards
+function displayRecipes() {
+    recipeList.innerHTML = '';
+
+    if (allRecipes.length === 0) {
+        readRecipeMessage.textContent = 'No recipes found.';
+        return;
+    }
+
+    const filteredRecipes = filterRecipes();
+
+    // No recipes match the search/filter
+    if (filteredRecipes.length === 0) {
+        readRecipeMessage.textContent =
+            'No recipes found. Try another search or cuisine.';
+        return;
+    }
+
+    readRecipeMessage.textContent = '';
+
+    filteredRecipes.forEach(recipe => {
+        // Create recipe card
+        const recipeCard = document.createElement('div');
+        recipeCard.className = 'recipe-card';
+
+        // DELETE - Preserve recipe ID for Vasu's feature
+        recipeCard.dataset.id = recipe.id;
+
+        // READ - Recipe image
+        const recipeImage = document.createElement('img');
+        recipeImage.className = 'recipe-image';
+        recipeImage.src = recipe.image || '/images/placeholder.jpg';
+        recipeImage.alt = recipe.name;
+        recipeImage.loading = 'lazy';
+
+        // Cuisine badge
+        const recipeCategory = document.createElement('span');
+        recipeCategory.className = 'recipe-category';
+        recipeCategory.textContent = recipe.category;
+
+        // Recipe name
+        const recipeName = document.createElement('h3');
+        recipeName.textContent = recipe.name;
+
+        // Ingredient count
+        const ingredientCount = document.createElement('p');
+        ingredientCount.className = 'recipe-info';
+        ingredientCount.textContent =
+            `${Array.isArray(recipe.ingredients) ? recipe.ingredients.length : 0} ingredient(s)`;
+
+        // READ - View Details button
+        const viewButton = document.createElement('button');
+        viewButton.type = 'button';
+        viewButton.className = 'view-details-button';
+        viewButton.textContent = 'View Details';
+
+        viewButton.addEventListener('click', () => {
+            loadRecipeDetails(recipe.id);
+        });
+
+        // UPDATE - Preserve Jansen's Edit button
+        const editButton = document.createElement('button');
+        editButton.type = 'button';
+        editButton.className = 'view-details-button';
+        editButton.textContent = 'Edit';
+
+        editButton.addEventListener('click', () => {
+            window.location.href =
+                '/edit.html?id=' + encodeURIComponent(recipe.id);
+        });
+
+        recipeCard.appendChild(recipeImage);
+        recipeCard.appendChild(recipeCategory);
+        recipeCard.appendChild(recipeName);
+        recipeCard.appendChild(ingredientCount);
+        recipeCard.appendChild(viewButton);
+        recipeCard.appendChild(editButton);
+
+        recipeList.appendChild(recipeCard);
+    });
+}
+
+// READ - Retrieve individual recipe from backend
+async function loadRecipeDetails(recipeId) {
+    try {
+        readRecipeMessage.textContent = '';
+
+        const response = await fetch(
+            '/recipes/' + encodeURIComponent(recipeId)
+        );
+
+        if (response.status === 400) {
+            readRecipeMessage.textContent = 'Invalid recipe ID.';
+            return;
+        }
+
+        if (response.status === 404) {
+            readRecipeMessage.textContent = 'Recipe not found.';
+            return;
+        }
+
+        if (!response.ok) {
+            throw new Error('Failed to retrieve recipe');
+        }
+
+        const recipe = await response.json();
+
+        if (
+            !recipe ||
+            typeof recipe.name !== 'string' ||
+            !Array.isArray(recipe.ingredients) ||
+            !Array.isArray(recipe.instructions)
+        ) {
+            throw new Error('Invalid recipe details');
+        }
+
+        displayRecipeDetails(recipe);
+
+    } catch (error) {
+        readRecipeMessage.textContent = 'Error loading recipe details.';
     }
 }
 
 // READ - Display individual recipe details
 function displayRecipeDetails(recipe) {
     recipeList.innerHTML = '';
+    readRecipeMessage.textContent = '';
 
     const detailCard = document.createElement('div');
     detailCard.className = 'recipe-detail';
@@ -171,20 +229,16 @@ function displayRecipeDetails(recipe) {
     recipeList.appendChild(detailCard);
 }
 
-// Load recipes automatically when the webpage opens
-displayRecipes();
+// Load recipes when webpage opens
+loadRecipes();
 
 // SEARCH - Filter recipes by name
-searchRecipe.addEventListener('input', () => {
-    displayRecipes();
-});
+searchRecipe.addEventListener('input', displayRecipes);
 
 // FILTER - Filter recipes by cuisine
-filterCuisine.addEventListener('change', () => {
-    displayRecipes();
-});
+filterCuisine.addEventListener('change', displayRecipes);
 
-// CREATE - Open the add recipe page
+// CREATE - Preserve Xiaotong's Create Recipe navigation
 const createRecipeButton = document.getElementById('createRecipeButton');
 
 createRecipeButton.addEventListener('click', () => {
