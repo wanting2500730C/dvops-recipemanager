@@ -9,9 +9,16 @@ async function readRecipes(req, res) {
         const data = await fs.readFile(filePath, 'utf8');
         const recipes = JSON.parse(data);
 
-        res.status(200).json(recipes);
+        if (!Array.isArray(recipes)) {
+            return res.status(500).json({
+                message: 'Invalid recipe data format'
+            });
+        }
+
+        return res.status(200).json(recipes);
+
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             message: 'Error retrieving recipes'
         });
     }
@@ -19,12 +26,30 @@ async function readRecipes(req, res) {
 
 // READ - Get recipe by ID
 async function readRecipeById(req, res) {
+    const recipeId = req.params.id;
+
+    // Validate UUID format
+    const uuidRegex =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+    if (!uuidRegex.test(recipeId)) {
+        return res.status(400).json({
+            message: 'Invalid recipe ID format'
+        });
+    }
+
     try {
         const data = await fs.readFile(filePath, 'utf8');
         const recipes = JSON.parse(data);
 
+        if (!Array.isArray(recipes)) {
+            return res.status(500).json({
+                message: 'Invalid recipe data format'
+            });
+        }
+
         const recipe = recipes.find(
-            recipe => recipe.id === req.params.id
+            recipe => recipe.id === recipeId
         );
 
         if (!recipe) {
@@ -33,9 +58,10 @@ async function readRecipeById(req, res) {
             });
         }
 
-        res.status(200).json(recipe);
+        return res.status(200).json(recipe);
+
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             message: 'Error retrieving recipe'
         });
     }

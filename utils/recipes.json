@@ -17,33 +17,66 @@
   },
   {
     "id": "930e82e2-7dd5-4926-b915-d03985636b49",
-    "name": "asdsa",
+    "name": "Garlic Butter Chicken",
     "category": "Indian",
     "ingredients": [
       {
-        "name": "test2",
-        "quantity": 2,
-        "unit": "cups"
-      }
-    ],
-    "instructions": [
-      "cook"
-    ]
-  },
-  {
-    "id": "fb824971-d4bd-45bc-ab0c-5daf483d7811",
-    "name": "test 2",
-    "category": "Korean",
-    "ingredients": [
+        "name": "Olive Oil",
+        "quantity": 3,
+        "unit": "Tablespoons"
+      },
       {
-        "name": "test 2",
+        "name": "Boneless Skinless Chicken Breast",
+        "quantity": 0.5,
+        "unit": "Pounds"
+      },
+      {
+        "name": "21 Salute Seasoning",
+        "quantity": 2,
+        "unit": "Teaspoons"
+      },
+      {
+        "name": "Kosher salt",
         "quantity": 1,
-        "unit": "g"
+        "unit": "Teaspoon"
+      },
+      {
+        "name": "Black pepper",
+        "quantity": 1,
+        "unit": "Teaspoon"
+      },
+      {
+        "name": "Chicken Broth",
+        "quantity": 0.5,
+        "unit": "Cups"
+      },
+      {
+        "name": "Unsalted Butter",
+        "quantity": 3,
+        "unit": "Tablespoons"
+      },
+      {
+        "name": "Minced Garlic",
+        "quantity": 1,
+        "unit": "Tablespoon"
+      },
+      {
+        "name": "Fresh Parsley",
+        "quantity": 2,
+        "unit": "Teaspoons"
       }
     ],
     "instructions": [
-      "test2"
-    ]
+      "To a large skillet, add the olive oil, pounded chicken, evenly season with 21 Salute (or your favorite poultry seasoning) salt, pepper, and cook over medium-high heat for 5 minutes. Do not touch, move, or disturb the chicken while it is searing. After 5 minutes, flip chicken over. It should have a medium golden color. For thicker/bigger chicken breasts, sear for 6-7 minutes.",
+      "Allow chicken to cook on the second side for about 5 minutes, or until done and cooked through. Again, do not disturb the chicken while it’s searing.",
+      "Remove chicken with a slotted spatula and place it on a plate to rest.",
+      "Using caution, deglaze your skillet by adding wine (or broth) and allow the liquid to bubble up and steam violently for a few seconds.",
+      "Add the butter and allow it to melt, about 1 minute; stir continuously until melted.",
+      "Add the garlic and cook until fragrant, about 1 minutes; stir continuously.",
+      "Turn the heat off, add the chicken back into the skillet, flip it around in the garlic butter sauce, and spoon the sauce over the chicken.",
+      "Optionally garnish with parsley and serve immediately."
+    ],
+    "image": "/uploads/930e82e2-7dd5-4926-b915-d03985636b49-1795317111410.jpg"
   },
   {
     "id": "6e5a0d13-5283-4836-843a-c9141f18a6c9",
